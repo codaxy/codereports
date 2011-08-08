@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata schemaVersion="2">
+    <id>Codaxy.CodeReports</id>    
+    <title>Codaxy.CodeReports Library</title>
+    <version>0.1.0</version>
+    <authors>Codaxy</authors>
+    <description>Codaxy.CodeReports Library provides helpers for report generation</description>
+	<dependencies>		
+		<dependency id="Codaxy.Common.Localization" />		
+		<dependency id="Codaxy.Common" />		
+	</dependencies>	
+ </metadata>
+</package>

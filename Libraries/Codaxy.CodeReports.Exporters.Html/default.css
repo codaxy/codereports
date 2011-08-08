@@ -1,0 +1,171 @@
+﻿body 
+{ 
+    padding: 5px;
+    margin: 0;   
+    background: white;     
+    font-family: sans-serif;
+    font-size: 8pt;
+}
+
+table {
+    font-family: sans-serif;
+    font-size: 8pt;
+}
+
+.title {
+    font-size: 15pt;
+    font-weight:bold;
+}
+
+.h1 {
+    font-size: 13pt;
+    font-weight:bold;
+}
+
+.h2 {
+    font-size: 11pt;
+    font-weight:bold;
+}
+
+.h3 {
+    font-size: 9pt;
+    font-weight:bold;
+}
+
+.note {
+    font-size: 7pt;
+    font-weight:bold;
+}
+
+.highlight {    
+    font-weight:bold;
+    font-size: 8pt;
+}
+
+/* row style */
+
+.r, .rh
+{    
+    font-size: 8pt;
+    border-bottom: solid 1px #EEEEEE;    
+    padding: 3px;
+    background: white;
+}
+
+.rf
+{    
+    font-size: 8pt;
+    border-bottom: solid 1px #E5E5E5;
+    background-color: #EEEEEE;
+    padding: 3px;    
+}
+
+/* group level 1 */
+
+.tg1-f, .tg1-fh
+{    
+    font-size: 8pt;    
+    background-color: #EEEEEE;
+    padding: 3px;
+}
+
+.tg1-ff
+{    
+    font-size: 8pt;    
+    background-color: #DFDFDF;
+    padding: 3px;
+}
+
+.tg1-h, .tg1-hh, .tg1-hf
+{   
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 3px;
+    background-color: #E7EFFA;
+    border-bottom: solid 1px #99BBE8;    
+}
+
+.tg1-caption {    
+    font-size: 9pt;
+    font-weight: bold;
+    border-bottom: solid 2px #99BBE8;    
+    padding-top: 6px;
+    background: white;
+}
+
+/* group level 2 */
+
+.tg2-f, .tg2-fh
+{   
+    font-size: 8pt;
+    font-weight: bold;    
+    background-color: #EEEEEE;
+    padding: 3px;
+    border-top: solid 1px #C0C0C0;    
+    
+}
+
+.tg2-ff
+{    
+    font-size: 8pt;
+    font-weight: bold;
+    background-color: #DFDFDF;
+    padding: 3px;
+    border-top: solid 1px #C0C0C0;    
+    
+}
+
+.tg2-h, .tg2-hh, .tg2-hf
+{    
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 3px;
+    background-color: #E7EFFA;
+    border-bottom: solid 1px #99BBE8;    
+}
+
+.tg2-caption {    
+    font-size: 11pt;
+    font-weight: bold;
+    border-bottom: solid 2px #99BBE8;    
+    padding-top:8px;
+    background: white;
+}
+
+/* group level 3 */
+
+.tg3-f, .tg3-fh
+{    
+    font-size: 9pt;
+    font-weight: bold;
+    background-color: #EEEEEE;
+    padding: 3px;
+    border-top: solid 2px #C0C0C0;        
+}
+
+.tg3-ff
+{    
+    font-size: 9pt;
+    font-weight: bold;
+    background-color: #DFDFDF;
+    padding: 3px;
+    border-top: solid 2px #C0C0C0;        
+}
+
+.tg3-h, .tg3-hh, .tg3-hf
+{    
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 3px;
+    background: #E7EFFA;
+    border-bottom: solid 1px #99BBE8;    
+}
+
+.tg3-caption 
+{    
+    font-size: 13pt;
+    font-weight: bold;
+    border-bottom: solid 2px #99BBE8;    
+    padding-top:10px;
+    background: white;
+}

@@ -42,9 +42,9 @@ namespace Codaxy.CodeReports.Exporters.Html
 
         public void Render(Report rep, IHtmlReportTheme theme, Dictionary<String, HtmlCellStyle> stylesheet)
         {
-            report = rep;            
+            report = rep;
 
-            html.e("table").att("cellpadding", 0).att("cellspacing", 0).att("width", "100%");
+            html.e("table").att("cellpadding", 0).att("cellspacing", 0);
             html.nl();
             html.e("tbody");
             html.nl();

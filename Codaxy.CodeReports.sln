@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.CodeReports.Exporter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.CodeReports.Exporters.Text", "Libraries\Codaxy.CodeReports.Exporters.Text\Codaxy.CodeReports.Exporters.Text.csproj", "{48ADB77E-2E90-4C71-B060-C9C2440FF095}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{866A302D-9CE0-4F7C-AEBC-B6A31EBFFB25}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.nuspec = NuGet\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.nuspec
+		NuGet\Codaxy.CodeReports\Codaxy.CodeReports.nuspec = NuGet\Codaxy.CodeReports\Codaxy.CodeReports.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

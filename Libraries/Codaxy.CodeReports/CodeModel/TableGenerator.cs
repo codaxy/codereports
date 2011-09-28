@@ -8,7 +8,7 @@ using Codaxy.Common.Reflection;
 
 namespace Codaxy.CodeReports.CodeModel
 {
-    internal class TableGenerator
+    public class TableGenerator
     {
         class ColLoc
         {

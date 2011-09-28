@@ -180,8 +180,8 @@ namespace Codaxy.CodeReports.Data
 
     public class TableAdapter<T> : ITable where T : class
     {
-        IEnumerable<T> rows;
-        public IEnumerable<T> Rows { get { return rows; } set { rows = value; OnRowsChanged();  } }
+        IList<T> rows;
+        public IList<T> Rows { get { return rows; } set { rows = value; OnRowsChanged(); } }
 
         Class helper;
         public TableAdapter() { helper = Class.Create(typeof(T)); }
@@ -252,12 +252,12 @@ namespace Codaxy.CodeReports.Data
     {
         public static ILookupTable CreateLookupTable<K, T>(IEnumerable<T> rows, LookupTableAdapter<K, T>.Selector selector) where T : class
         {
-            return new LookupTableAdapter<K, T>(selector) { Rows = rows };
+            return new LookupTableAdapter<K, T>(selector) { Rows = rows.ToList() };
         }
 
         public static ITable CreateTable<T>(IEnumerable<T> rows) where T : class
         {
-            return new TableAdapter<T>() { Rows = rows };
+            return new TableAdapter<T>() { Rows = rows.ToList() };
         }
     }   
 }

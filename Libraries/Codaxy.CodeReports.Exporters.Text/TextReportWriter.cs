@@ -56,23 +56,27 @@ namespace Codaxy.CodeReports.Exporters.Text
                 CellStyleIndex.Group3FooterFooter,
             };
 
+            var previousLineWasFooter = false;
+
             for (var r = 0; r < data.Count; r++)
             {
-                bool header = false;
-                bool caption = false;
+                bool header = data[r].Any(cell => cell.Style == CellStyleIndex.Group1Header || cell.Style == CellStyleIndex.Group2Header || cell.Style == CellStyleIndex.Group3Header);
+                bool caption = data[r].Any(cell => cell.Style == CellStyleIndex.Group1Caption || cell.Style == CellStyleIndex.Group2Caption || cell.Style == CellStyleIndex.Group3Caption);
+                bool footer = data[r].Any(cell => footerStyles.Contains(cell.Style));
+
+                if (previousLineWasFooter && !footer) //skip one line after footer
+                    tw.WriteLine();
+
+                if (footer)
+                {
+                    for (var fc = 0; fc < colWidth.Count; fc++)
+                        for (var i = 0; i < colWidth[fc]; i++)
+                            tw.Write("-");
+                }
+
                 for (var c = 0; c < colWidth.Count; c++)
                 {
                     var cell = data[r][c];
-                    header |= cell.Style == CellStyleIndex.Group1Header || cell.Style == CellStyleIndex.Group2Header || cell.Style == CellStyleIndex.Group3Header;
-                    caption |= cell.Style == CellStyleIndex.Group1Caption || cell.Style == CellStyleIndex.Group2Caption || cell.Style == CellStyleIndex.Group3Caption;
-                    if (c==0 && footerStyles.Contains(cell.Style))
-                    {
-                        for (var fc = 0; fc < colWidth.Count; fc++)
-                            for (var i = 0; i < colWidth[fc]; i++)
-                                tw.Write("-");
-                        tw.WriteLine();
-                    }
-
                     if (cell.Text != null)
                     {
                         int padLeft = 0;
@@ -95,7 +99,7 @@ namespace Codaxy.CodeReports.Exporters.Text
                             tw.Write(" ");
                         tw.Write(cell.Text);
                         while (padRight-- > 0)
-                            tw.Write(" ");                        
+                            tw.Write(" ");
                     }
                     else
                     {
@@ -118,6 +122,8 @@ namespace Codaxy.CodeReports.Exporters.Text
                             tw.Write("-");
                     tw.WriteLine();
                 }
+                else if (footer)
+                    previousLineWasFooter = true;
             }
         }
     }

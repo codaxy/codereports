@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Codaxy.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Codaxy.Common.0.5.3\lib\Codaxy.Common.dll</HintPath>
+      <HintPath>..\..\packages\Codaxy.Common.0.5.9\lib\Codaxy.Common.dll</HintPath>
     </Reference>
     <Reference Include="Codaxy.Common.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Codaxy.Common.Localization.0.5.3\lib\Codaxy.Common.Localization.dll</HintPath>
+      <HintPath>..\..\packages\Codaxy.Common.Localization.0.5.5\lib\Codaxy.Common.Localization.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

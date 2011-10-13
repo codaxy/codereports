@@ -3,7 +3,7 @@
   <metadata schemaVersion="2">
     <id>Codaxy.CodeReports.Exporters.Text</id>    
     <title>Codaxy.CodeReports Text Exporter Library</title>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <authors>Codaxy</authors>
     <description>Codaxy.CodeReports Library provides helpers for report generation</description>
 	<dependencies>		

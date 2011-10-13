@@ -40,8 +40,8 @@ namespace Codaxy.CodeReports.Exporters.Text
                 c.Alignment = cell.Alignment;
                 c.Style = cell.CellStyleIndex;
                 if (cell.FormattedValue != null && c.Merge == null)
-                    if (cell.FormattedValue.Length + 1 > colWidth[cell.Column])
-                        colWidth[cell.Column] = cell.FormattedValue.Length + 1; 
+                    if (cell.FormattedValue.Length > colWidth[cell.Column])
+                        colWidth[cell.Column] = cell.FormattedValue.Length; 
             }
 
             var footerStyles = new[] {
@@ -72,12 +72,19 @@ namespace Codaxy.CodeReports.Exporters.Text
                 if (footer)
                 {
                     for (var fc = 0; fc < colWidth.Count; fc++)
-                        for (var i = 0; i < colWidth[fc]; i++)
+                    {
+                        if (fc > 0)
                             tw.Write("-");
+                        for (var i = 0; i < colWidth[fc]; i++)
+                            tw.Write("-");                        
+                    }
+                    tw.WriteLine();
                 }
 
                 for (var c = 0; c < colWidth.Count; c++)
                 {
+                    if (c > 0)
+                        tw.Write(" ");
                     var cell = data[r][c];
                     if (cell.Text != null)
                     {
@@ -113,17 +120,22 @@ namespace Codaxy.CodeReports.Exporters.Text
                 if (caption)
                 {
                     for (var c = 0; c < colWidth.Count; c++)
+                    {
+                        if (c > 0)
+                            tw.Write("=");
                         for (var i = 0; i < colWidth[c]; i++)
                             tw.Write("=");
+                    }
                     tw.WriteLine();
                 }
                 else if (header)
                 {
                     for (var c = 0; c < colWidth.Count; c++)
                     {
-                        for (var i = 0; i < colWidth[c] - 1; i++)
+                        if (c > 0)
+                            tw.Write(" ");
+                        for (var i = 0; i < colWidth[c]; i++)
                             tw.Write("-");
-                        tw.Write(" ");
                     }
                     tw.WriteLine();
                 }

@@ -120,8 +120,11 @@ namespace Codaxy.CodeReports.Exporters.Text
                 else if (header)
                 {
                     for (var c = 0; c < colWidth.Count; c++)
-                        for (var i = 0; i < colWidth[c]; i++)
+                    {
+                        for (var i = 0; i < colWidth[c] - 1; i++)
                             tw.Write("-");
+                        tw.Write(" ");
+                    }
                     tw.WriteLine();
                 }
             }

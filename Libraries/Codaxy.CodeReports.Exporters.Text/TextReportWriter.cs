@@ -59,11 +59,12 @@ namespace Codaxy.CodeReports.Exporters.Text
             for (var r = 0; r < data.Count; r++)
             {
                 bool header = false;
+                bool caption = false;
                 for (var c = 0; c < colWidth.Count; c++)
                 {
                     var cell = data[r][c];
                     header |= cell.Style == CellStyleIndex.Group1Header || cell.Style == CellStyleIndex.Group2Header || cell.Style == CellStyleIndex.Group3Header;
-
+                    caption |= cell.Style == CellStyleIndex.Group1Caption || cell.Style == CellStyleIndex.Group2Caption || cell.Style == CellStyleIndex.Group3Caption;
                     if (c==0 && footerStyles.Contains(cell.Style))
                     {
                         for (var fc = 0; fc < colWidth.Count; fc++)
@@ -103,11 +104,18 @@ namespace Codaxy.CodeReports.Exporters.Text
                     }
                 }
                 tw.WriteLine();
-                if (header)
+                if (caption)
                 {
                     for (var c = 0; c < colWidth.Count; c++)
                         for (var i = 0; i < colWidth[c]; i++)
                             tw.Write("=");
+                    tw.WriteLine();
+                }
+                else if (header)
+                {
+                    for (var c = 0; c < colWidth.Count; c++)
+                        for (var i = 0; i < colWidth[c]; i++)
+                            tw.Write("-");
                     tw.WriteLine();
                 }
             }

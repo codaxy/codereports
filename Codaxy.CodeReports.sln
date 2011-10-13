@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{866A302D-9CE0-4F7C-AEBC-B6A31EBFFB25}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.nuspec = NuGet\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.nuspec
+		NuGet\Codaxy.CodeReports.Exporters.Text\Codaxy.CodeReports.Exporters.Text.nuspec = NuGet\Codaxy.CodeReports.Exporters.Text\Codaxy.CodeReports.Exporters.Text.nuspec
 		NuGet\Codaxy.CodeReports\Codaxy.CodeReports.nuspec = NuGet\Codaxy.CodeReports\Codaxy.CodeReports.nuspec
 	EndProjectSection
 EndProject

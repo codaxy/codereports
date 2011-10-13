@@ -56,7 +56,7 @@ namespace Codaxy.CodeReports.Exporters.Text
                 CellStyleIndex.Group3FooterFooter,
             };
 
-            var previousLineWasFooter = false;
+            var previousRowWasCaptionOrHeader = true;
 
             for (var r = 0; r < data.Count; r++)
             {
@@ -64,8 +64,10 @@ namespace Codaxy.CodeReports.Exporters.Text
                 bool caption = data[r].Any(cell => cell.Style == CellStyleIndex.Group1Caption || cell.Style == CellStyleIndex.Group2Caption || cell.Style == CellStyleIndex.Group3Caption);
                 bool footer = data[r].Any(cell => footerStyles.Contains(cell.Style));
 
-                if (previousLineWasFooter && !footer) //skip one line after footer
+                if (!previousRowWasCaptionOrHeader && (header || caption)) //skip one line after footer
                     tw.WriteLine();
+
+                previousRowWasCaptionOrHeader = (header || caption);
 
                 if (footer)
                 {
@@ -122,8 +124,6 @@ namespace Codaxy.CodeReports.Exporters.Text
                             tw.Write("-");
                     tw.WriteLine();
                 }
-                
-                previousLineWasFooter = footer;
             }
         }
     }

@@ -110,7 +110,8 @@ namespace Codaxy.CodeReports.CodeModel
                         LookupField = tca.LookupField,
                         LookupTable = tca.LookupTable,
                         SortDirection = tca.SortDirection,
-                        SortIndex = tca.SortIndex
+                        SortIndex = tca.SortIndex, 
+                        CellDisplayMode = tca.CellDisplayMode
                     };
 
                     List<ColLoc> colLoc;

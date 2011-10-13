@@ -13,6 +13,7 @@ namespace Codaxy.CodeReports.Controls
     public enum AggregateFunction { None, Sum, Count, Avg, Product, Min, Max }
     public enum ColumnFooterType { FooterText, AggregateValue, GroupFooter }
     public enum TableColumnType { Normal, HeaderColumn, FooterColumn };
+    public enum CellDisplayMode { Normal, RowNumber, AccumulatorValue };
 
     public class TableColumn
     {
@@ -33,6 +34,7 @@ namespace Codaxy.CodeReports.Controls
         public int FooterColSpan { get; set; }
         public String FooterFormat { get; set; }
         public TableColumnType ColumnType { get; set; }
+        public CellDisplayMode CellDisplayMode { get; set; }
         
         internal int _Index { get; set; }
         internal int _DataFieldIndex { get; set; }
@@ -302,10 +304,9 @@ namespace Codaxy.CodeReports.Controls
                             {
                                 for (int c = 0; c < Columns.Length; c++)
                                 {
-                                    if (Columns[c].AggregateFunction == AggregateFunction.Avg && gd.GroupCounter[c] > 0 && gd.GroupAccumulator[c] != null)
-                                    {
-                                        gd.GroupAccumulator[c] = Convert.ToDecimal(gd.GroupAccumulator[c]) / gd.GroupCounter[c];
-                                    }
+                                    if (Columns[c].AggregateFunction == AggregateFunction.Avg)
+                                        gd.GroupAccumulator[c] = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);
+                                    
                                     var style = gd.GetFooterCellStyle(Columns[c].ColumnType);
                                     switch (Columns[c].FooterType)
                                     {
@@ -404,23 +405,9 @@ namespace Codaxy.CodeReports.Controls
                         for (int c = 0; c < Columns.Length; c++)
                         {
                             var dfi = Columns[c]._DataFieldIndex;
-                            var v = Columns[c].DataField == "#" ? r + 1 : row[dfi];
-                            String fv = (Columns[c].Format != null) ? String.Format(Columns[c].Format, v) : (v != null ? v.ToString() : null);
-
-                            if (g + 1 == groupData.Count)
-                                cells.Add(new Cell
-                                {
-                                    Column = pos.Col + c,
-                                    Row = pos.Row,
-                                    Value = v,
-                                    FormattedValue = fv,
-                                    CellStyleIndex = Columns[c].ColumnType == TableColumnType.HeaderColumn ? CellStyleIndex.TableRowHeader : Columns[c].ColumnType == TableColumnType.FooterColumn ? CellStyleIndex.TableRowFooter : CellStyleIndex.TableRow,
-                                    Alignment = align[c],
-                                    Format = Columns[c].Format
-                                });
+                            var v = row[dfi];
 
                             var th = dfi >= 0 ? data.TypeHelper[dfi] : null;
-
                             if (th != null)
                             {
                                 switch (Columns[c].AggregateFunction)
@@ -456,6 +443,34 @@ namespace Codaxy.CodeReports.Controls
                                         break;
                                 }
                             }
+
+                            switch (Columns[c].CellDisplayMode)
+                            {
+                                default:
+                                case CellDisplayMode.Normal:
+                                    v = Columns[c].DataField == "#" ? r + 1 : row[dfi];
+                                    break;
+                                case CellDisplayMode.RowNumber:
+                                    v = r + 1;
+                                    break;
+                                case CellDisplayMode.AccumulatorValue:
+                                    v = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);
+                                    break;
+                            }
+                            
+                            String fv = (Columns[c].Format != null) ? String.Format(Columns[c].Format, v) : (v != null ? v.ToString() : null);
+
+                            if (g + 1 == groupData.Count)
+                                cells.Add(new Cell
+                                {
+                                    Column = pos.Col + c,
+                                    Row = pos.Row,
+                                    Value = v,
+                                    FormattedValue = fv,
+                                    CellStyleIndex = Columns[c].ColumnType == TableColumnType.HeaderColumn ? CellStyleIndex.TableRowHeader : Columns[c].ColumnType == TableColumnType.FooterColumn ? CellStyleIndex.TableRowFooter : CellStyleIndex.TableRow,
+                                    Alignment = align[c],
+                                    Format = Columns[c].Format
+                                });
                         }
 
                         if (g + 1 == groupData.Count)
@@ -469,6 +484,23 @@ namespace Codaxy.CodeReports.Controls
             fm.GetRect(RowCol.Zero, 0, pos.Row - startRow);
 
             report.Cells.AddRange(cells);
+        }
+
+        object CalculateAggregate(AggregateFunction f, object accumulator, int counter)
+        {
+            switch (f)
+            {
+                case AggregateFunction.None:
+                    return null;
+                case AggregateFunction.Count:
+                    return counter;
+                case AggregateFunction.Avg:
+                    if (accumulator != null && counter > 0)
+                        return Convert.ToDecimal(accumulator) / counter;
+                    return null;
+                default:
+                    return accumulator;
+            }
         }
 
         CellAlignment CalcAlignment(CellAlignment a, TypeHelper th)

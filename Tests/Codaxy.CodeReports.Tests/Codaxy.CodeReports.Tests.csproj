@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CellDisplayModeTests.cs" />
+    <Compile Include="Helpers\ExpandableList.cs" />
+    <Compile Include="Helpers\ReportUtil.cs" />
     <Compile Include="PetaTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

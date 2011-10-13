@@ -283,10 +283,9 @@ namespace Codaxy.CodeReports.Controls
                     }
                 align[c] = th != null ? CalcAlignment(Columns[c].CellAlignment, th) : CellAlignment.Right;
             }
-            
 
             Data.Row prevRow = null;
-            for (int r = 0; r <= rows.Length; r++)
+            for (int r = 0, rowIndex = 0; r <= rows.Length; r++, rowIndex++)
             {
                 var row = r < rows.Length ? rows[r] : null;
 
@@ -344,6 +343,7 @@ namespace Codaxy.CodeReports.Controls
                         if (!gd.GroupOpen)
                         {
                             gd.GroupOpen = true;
+                            rowIndex = 0;
 
                             if (gd.Group.ShowCaption)
                             {
@@ -448,10 +448,10 @@ namespace Codaxy.CodeReports.Controls
                             {
                                 default:
                                 case CellDisplayMode.Normal:
-                                    v = Columns[c].DataField == "#" ? r + 1 : row[dfi];
+                                    v = Columns[c].DataField == "#" ? rowIndex + 1 : row[dfi];
                                     break;
                                 case CellDisplayMode.RowNumber:
-                                    v = r + 1;
+                                    v = rowIndex + 1;
                                     break;
                                 case CellDisplayMode.AccumulatorValue:
                                     v = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);

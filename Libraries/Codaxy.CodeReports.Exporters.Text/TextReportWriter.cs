@@ -122,8 +122,8 @@ namespace Codaxy.CodeReports.Exporters.Text
                             tw.Write("-");
                     tw.WriteLine();
                 }
-                else if (footer)
-                    previousLineWasFooter = true;
+                
+                previousLineWasFooter = footer;
             }
         }
     }

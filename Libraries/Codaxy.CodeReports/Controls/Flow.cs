@@ -49,16 +49,18 @@ namespace Codaxy.CodeReports.Controls
                 Add(c);
         }
 
-        public void AddTable<T>(string tableName)
+        public Table AddTable<T>(string tableName)
         {
             var table = TableGenerator.GetTable(typeof(T), tableName);
             Add(table);
+			return table;
         }
 
-        public void AddTable<T>(string tableName, ILocalizationStore localizationStore)
+		public Table AddTable<T>(string tableName, ILocalizationStore localizationStore)
         {
             var table = TableGenerator.GetTable(typeof(T), tableName, localizationStore);
             Add(table);
+			return table;
         }
 
         public Rect GetRect(RowCol pos, int w, int h)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Codaxy.CodeReports.Styling;
 
 namespace Codaxy.CodeReports.Exporters.Html
 {
@@ -9,6 +10,19 @@ namespace Codaxy.CodeReports.Exporters.Html
     {
         public String CssClass { get; set; }
         public String Style { get; set; }
+
+		public static String BuildHtmlStyle(CellStyle style)
+		{
+			if (style == null)
+				return null;
+			StringBuilder sb = new StringBuilder();
+			if (style.FontStyle != null)
+			{
+				if (style.FontStyle.FontColor != null)
+					sb.Append("color:").Append(style.FontStyle.FontColor.ToHtml()).Append(";");			
+			}
+			return sb.ToString();
+		}
     }
 
     public interface IHtmlReportTheme

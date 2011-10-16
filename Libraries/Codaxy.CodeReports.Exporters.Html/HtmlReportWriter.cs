@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Web.UI;
+using Codaxy.CodeReports.Styling;
 
 namespace Codaxy.CodeReports.Exporters.Html
 {
@@ -90,11 +91,25 @@ namespace Codaxy.CodeReports.Exporters.Html
                     {
                         html.td();
                         CheckMergeOrigin(ind);
-                        var style = styleCache[(int)cell.CellStyleIndex];                        
-                        if (style != null)
-                            ApplyStyle(style);
-                        else if (!String.IsNullOrEmpty(cell.CellStyleName) && stylesheet!=null && stylesheet.TryGetValue(cell.CellStyleName, out style) && style!= null)
-                            ApplyStyle(style);
+						HtmlCellStyle style = null;
+						
+						if (String.IsNullOrEmpty(cell.CellStyleName) || stylesheet == null || !stylesheet.TryGetValue(cell.CellStyleName, out style))
+							style = styleCache[(int)cell.CellStyleIndex];
+
+						String css = null;
+						String styles = null;
+                        if (style != null) {
+							if (style.CssClass!=null)
+								css = style.CssClass;
+							if (style.Style!=null)
+								styles = style.Style;
+						}
+
+						if (cell.CustomStyle != null)
+							styles += (styles != null ? " " : "") + HtmlCellStyle.BuildHtmlStyle(cell.CustomStyle);
+
+						html.attCls(css);
+						html.attStyle(styles);
 
                         switch (cell.Alignment)
                         {
@@ -121,12 +136,6 @@ namespace Codaxy.CodeReports.Exporters.Html
             html.nl();
             html.c(); //table
             html.nl();
-        }
-
-        void ApplyStyle(HtmlCellStyle style)
-        {
-            html.attCls(style.CssClass);
-            html.attStyle(style.Style);
         }
 
         private void StartRow(int row, int col)

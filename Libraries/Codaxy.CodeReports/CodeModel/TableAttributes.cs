@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Codaxy.CodeReports.Data;
 using Codaxy.CodeReports.Controls;
+using Codaxy.CodeReports.Styling;
 
 namespace Codaxy.CodeReports.CodeModel
 {
@@ -34,7 +35,7 @@ namespace Codaxy.CodeReports.CodeModel
         public int FooterColSpan { get; set; }
         public String FooterFormat { get; set; }
         public bool IsRowHeader { get; set; }
-        public bool IsRowFooter { get; set; }
+        public bool IsRowFooter { get; set; }		
     }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]

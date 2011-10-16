@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 using Codaxy.CodeReports.Data;
 using Codaxy.Common.Text;
+using Codaxy.CodeReports.Styling;
 
 namespace Codaxy.CodeReports.Controls
 {
@@ -35,6 +35,7 @@ namespace Codaxy.CodeReports.Controls
         public String FooterFormat { get; set; }
         public TableColumnType ColumnType { get; set; }
         public CellDisplayMode CellDisplayMode { get; set; }
+		public Func<object, CellStyle> ConditionalFormatting { get; set; }
         
         internal int _Index { get; set; }
         internal int _DataFieldIndex { get; set; }
@@ -457,20 +458,25 @@ namespace Codaxy.CodeReports.Controls
                                     v = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);
                                     break;
                             }
+
+							CellStyle addStyle = null;
+							if (Columns[c].ConditionalFormatting != null)
+								addStyle = Columns[c].ConditionalFormatting(v);							
                             
                             String fv = (Columns[c].Format != null) ? String.Format(Columns[c].Format, v) : (v != null ? v.ToString() : null);
 
-                            if (g + 1 == groupData.Count)
-                                cells.Add(new Cell
-                                {
-                                    Column = pos.Col + c,
-                                    Row = pos.Row,
-                                    Value = v,
-                                    FormattedValue = fv,
-                                    CellStyleIndex = Columns[c].ColumnType == TableColumnType.HeaderColumn ? CellStyleIndex.TableRowHeader : Columns[c].ColumnType == TableColumnType.FooterColumn ? CellStyleIndex.TableRowFooter : CellStyleIndex.TableRow,
-                                    Alignment = align[c],
-                                    Format = Columns[c].Format
-                                });
+							if (g + 1 == groupData.Count)
+								cells.Add(new Cell
+								{
+									Column = pos.Col + c,
+									Row = pos.Row,
+									Value = v,
+									FormattedValue = fv,
+									CellStyleIndex = Columns[c].ColumnType == TableColumnType.HeaderColumn ? CellStyleIndex.TableRowHeader : Columns[c].ColumnType == TableColumnType.FooterColumn ? CellStyleIndex.TableRowFooter : CellStyleIndex.TableRow,
+									Alignment = align[c],
+									Format = Columns[c].Format,
+									CustomStyle = addStyle
+								});
                         }
 
                         if (g + 1 == groupData.Count)

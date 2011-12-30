@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 
 namespace Codaxy.CodeReports.Styling
 {
@@ -61,7 +60,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+                        Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 2
                     }
@@ -83,7 +82,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Top = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#C0C0C0"),
+                        Color = Color.FromHtml("#C0C0C0"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 2
                     }
@@ -94,7 +93,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 9,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#EEEEEE"),
+				BackgroundColor = Color.FromHtml("#EEEEEE"),
                 CellPadding = 2
 
             };
@@ -106,7 +105,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Top = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#C0C0C0"),
+						Color = Color.FromHtml("#C0C0C0"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 2
                     }
@@ -117,7 +116,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 9,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#DFDFDF"),
+				BackgroundColor = Color.FromHtml("#DFDFDF"),
                 CellPadding = 2
 
             };
@@ -129,7 +128,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+						Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -140,7 +139,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 9,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#E7EFFA"),
+				BackgroundColor = Color.FromHtml("#E7EFFA"),
                 CellPadding = 2
 
             };
@@ -153,7 +152,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+						Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 2
                     }
@@ -175,7 +174,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Top = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#C0C0C0"),
+						Color = Color.FromHtml("#C0C0C0"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -186,7 +185,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 8,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#EEEEEE"),
+				BackgroundColor = Color.FromHtml("#EEEEEE"),
                 CellPadding = 2
 
             };
@@ -197,7 +196,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Top = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#C0C0C0"),
+						Color = Color.FromHtml("#C0C0C0"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -208,7 +207,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 8,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#DFDFDF"),
+				BackgroundColor = Color.FromHtml("#DFDFDF"),
                 CellPadding = 2
             };
 
@@ -218,7 +217,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+						Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -229,7 +228,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 8,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#E7EFFA"),
+				BackgroundColor = Color.FromHtml("#E7EFFA"),
                 CellPadding = 2
 
             };
@@ -240,7 +239,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+						Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 2
                     }
@@ -263,7 +262,7 @@ namespace Codaxy.CodeReports.Styling
                     FontName = "Segoe UI",
                     FontSize = 8
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#EEEEEE"),
+				BackgroundColor = Color.FromHtml("#EEEEEE"),
                 CellPadding = 2
 
             };
@@ -276,7 +275,7 @@ namespace Codaxy.CodeReports.Styling
                     FontName = "Segoe UI",
                     FontSize = 8
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#DFDFDF"),
+				BackgroundColor = Color.FromHtml("#DFDFDF"),
                 CellPadding = 2
 
             };
@@ -288,7 +287,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#99BBE8"),
+						Color = Color.FromHtml("#99BBE8"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -299,7 +298,7 @@ namespace Codaxy.CodeReports.Styling
                     FontSize = 8,
                     Bold = true
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#E7EFFA"),
+				BackgroundColor = Color.FromHtml("#E7EFFA"),
                 CellPadding = 2
             };
 
@@ -310,7 +309,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#EEEEEE"),
+						Color = Color.FromHtml("#EEEEEE"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -329,7 +328,7 @@ namespace Codaxy.CodeReports.Styling
                 {
                     Bottom = new BorderEdgeStyle
                     {
-                        Color = ColorTranslator.FromHtml("#E5E5E5"),
+						Color = Color.FromHtml("#E5E5E5"),
                         LineStyle = LineStyle.Solid,
                         LineWidth = 1
                     }
@@ -339,7 +338,7 @@ namespace Codaxy.CodeReports.Styling
                     FontName = "Segoe UI",
                     FontSize = 8
                 },
-                BackgroundColor = ColorTranslator.FromHtml("#EEEEEE"),
+				BackgroundColor = Color.FromHtml("#EEEEEE"),
                 CellPadding = 2
             };
 

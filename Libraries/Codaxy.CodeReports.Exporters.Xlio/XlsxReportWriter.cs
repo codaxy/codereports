@@ -82,7 +82,7 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                             c.Style.Format = GetNumberFormat(cell.Format);
 
                         if (eStyle.BackgroundColor != null)
-                            c.Style.Fill = new CellFill { Foreground = eStyle.BackgroundColor.Value.ToColor(), Pattern = FillPattern.Solid };
+                            c.Style.Fill = new CellFill { Foreground = eStyle.BackgroundColor.ToColor(), Pattern = FillPattern.Solid };
                     }
 
                     ws.Cells[cell.Row, cell.Column].Style.Alignment.HAlign = GetAlignment(cell.Alignment);
@@ -152,8 +152,8 @@ namespace Codaxy.CodeReports.Exporters.Xlio
             return res;
         }
 
-        public static Codaxy.Xlio.Color ToColor(this System.Drawing.Color c) {
-            return new Color(c.A, c.R, c.G, c.B);
+        public static Codaxy.Xlio.Color ToColor(this Codaxy.CodeReports.Styling.Color c) {
+			return new Codaxy.Xlio.Color(c.a, c.r, c.g, c.b);
         }
 
         private static Codaxy.Xlio.BorderStyle GetBorderStyle(BorderEdgeStyle style)

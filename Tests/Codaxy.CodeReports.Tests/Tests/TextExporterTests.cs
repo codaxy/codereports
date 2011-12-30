@@ -17,10 +17,10 @@ namespace Codaxy.CodeReports.Tests
         [GroupingLevel(0, ShowHeader=true, ShowFooter=true, ShowCaption=true, CaptionFormat="Caption")]
         class Item
         {
-            [TableColumn]
+            [TableColumn()]
             public String Col1 { get; set; }
 
-            [TableColumn]
+            [TableColumn()]
             public int Col2 { get; set; }
         }
 

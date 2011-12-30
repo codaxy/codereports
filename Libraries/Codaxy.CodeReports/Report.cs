@@ -97,5 +97,6 @@ namespace Codaxy.CodeReports
         public String CellStyleName { get; set; }
         public String Url { get; set; }
         public CellAlignment Alignment { get; set; }
-    }
+		public Styling.CellStyle CustomStyle { get; set; }
+	}
 }

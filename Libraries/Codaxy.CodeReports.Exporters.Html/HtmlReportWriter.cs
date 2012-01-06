@@ -18,10 +18,13 @@ namespace Codaxy.CodeReports.Exporters.Html
         HashSet<int> merged;
         Dictionary<int, int> rowSpan;
         Dictionary<int, int> colSpan;
+        
+        public bool HtmlEncode { get; set; }
 
         public HtmlReportWriter(HtmlTextWriter output)
         {
             html = new HtmlBuilder(output);
+            HtmlEncode = true;
         }
 
         int CellIndex(int row, int col) { return row * 5000 + col; }
@@ -125,8 +128,8 @@ namespace Codaxy.CodeReports.Exporters.Html
                         }
                         if (String.IsNullOrEmpty(cell.FormattedValue))
                             html.nbsp();
-                        else
-                            html.text(cell.FormattedValue);
+                        else 
+                            html.text(cell.FormattedValue, HtmlEncode);                        
                         html.c(); //td                    
                     }
                 }

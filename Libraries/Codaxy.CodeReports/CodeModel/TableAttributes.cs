@@ -28,6 +28,7 @@ namespace Codaxy.CodeReports.CodeModel
         public String FooterText { get; set; }
         public ColumnFooterType FooterType { get; set; }
         public AggregateFunction AggregateFunction { get; set; }
+        public String AggregateWeightDataField { get; set; }
         public CellAlignment CellAlignment { get; set; }
         public CellDisplayMode CellDisplayMode { get; set; }
         public CellAlignment FooterAlignment { get; set; }

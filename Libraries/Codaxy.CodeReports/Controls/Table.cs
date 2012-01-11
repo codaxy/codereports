@@ -36,9 +36,11 @@ namespace Codaxy.CodeReports.Controls
         public TableColumnType ColumnType { get; set; }
         public CellDisplayMode CellDisplayMode { get; set; }
 		public Func<object, CellStyle> ConditionalFormatting { get; set; }
+        public String AggregateWeightDataField { get; set; }
         
         internal int _Index { get; set; }
         internal int _DataFieldIndex { get; set; }
+        public int _AggregateWeightDataFieldIndex { get; set; }
     }
 
     public class GroupByColumn
@@ -73,7 +75,7 @@ namespace Codaxy.CodeReports.Controls
             public SortColumn[] Columns { get; set; }
 
             public object[] GroupAccumulator { get; set; }
-            public int[] GroupCounter { get; set; }
+            public decimal[] GroupCounter { get; set; }
 
             public String PreparedCaptionFormat { get; set; }
             public int[] PreparedCaptionColumns { get; set; }
@@ -84,7 +86,6 @@ namespace Codaxy.CodeReports.Controls
             public Boolean GroupOpen { get; set; }
 
             public int GroupIndex { get; set; }
-            
 
             public CellStyleIndex GetHeaderCellStyle(TableColumnType cellType) {
                 switch (cellType)
@@ -170,22 +171,36 @@ namespace Codaxy.CodeReports.Controls
         public override void Render(Report report, Flow fm, DataContext dataContext)
         {
             HashSet<String> fieldNames = new HashSet<string>();
-            
+
             foreach (var c in Columns)
+            {
                 if (c.DataField != "#")
                     fieldNames.Add(c.DataField);
+                if (c.AggregateWeightDataField != null)
+                    fieldNames.Add(c.AggregateWeightDataField);
+            }
             
             foreach (var g in Groups)
                 foreach (var sc in g.GroupByColumns)
                     fieldNames.Add(sc.DataField);
 
             var data = dataContext.CreateTable(DataTable, fieldNames.ToArray());
+            
 
             for (int i = 0; i < Columns.Length; i++)
             {
                 Columns[i]._Index = i;
                 Columns[i]._DataFieldIndex = data.GetColumnIndex(Columns[i].DataField);
-            }            
+
+                if (Columns[i].AggregateWeightDataField != null)
+                {
+                    Columns[i]._AggregateWeightDataFieldIndex = data.GetColumnIndex(Columns[i].AggregateWeightDataField);
+                    if (Columns[i]._AggregateWeightDataFieldIndex == -1)
+                        throw new InvalidOperationException(String.Format("Weight column '{0}' not found.", Columns[i].AggregateWeightDataField));
+                }
+            }      
+      
+            
 
             List<SortColumn> sort = new List<SortColumn>();
             List<GroupData> groupData = new List<GroupData>();
@@ -259,7 +274,7 @@ namespace Codaxy.CodeReports.Controls
             
 
             object[] accumulator = new object[Columns.Length];
-            int[] count = new int[Columns.Length];
+            decimal[] count = new decimal[Columns.Length];
             CellAlignment[] align = new CellAlignment[Columns.Length];
 
             for (int c = 0; c < Columns.Length; c++)
@@ -275,8 +290,16 @@ namespace Codaxy.CodeReports.Controls
                             accumulator[c] = 0;
                             break;
                         case AggregateFunction.Avg:
-                            accumulator[c] = th.Math.Zero;
-                            count[c] = 0;
+                            if (Columns[c].AggregateWeightDataField != null)
+                            {
+                                count[c] = 0;
+                                accumulator[c] = 0m;
+                            }
+                            else
+                            {
+                                accumulator[c] = th.Math.Zero;
+                                count[c] = 0;
+                            }
                             break;
                         case AggregateFunction.Product:
                             accumulator[c] = th.Math.One;
@@ -377,7 +400,7 @@ namespace Codaxy.CodeReports.Controls
                             }
 
                             gd.GroupAccumulator = new object[Columns.Length];
-                            gd.GroupCounter = new int[Columns.Length];
+                            gd.GroupCounter = new decimal[Columns.Length];
 
                             //reset group accumulator
                             for (int c = 0; c < Columns.Length; c++)
@@ -393,8 +416,16 @@ namespace Codaxy.CodeReports.Controls
                                             gd.GroupAccumulator[c] = 0;
                                             break;
                                         case AggregateFunction.Avg:
-                                            gd.GroupAccumulator[c] = th.Math.Zero;
-                                            gd.GroupCounter[c] = 0;
+                                            if (Columns[c].AggregateWeightDataField != null)
+                                            {
+                                                gd.GroupAccumulator[c] = 0m;
+                                                gd.GroupCounter[c] = 0;
+                                            }
+                                            else
+                                            {
+                                                gd.GroupAccumulator[c] = th.Math.Zero;
+                                                gd.GroupCounter[c] = 0;
+                                            }
                                             break;
                                         case AggregateFunction.Product:
                                             gd.GroupAccumulator[c] = th.Math.One;
@@ -426,8 +457,22 @@ namespace Codaxy.CodeReports.Controls
                                     case AggregateFunction.Avg:
                                         if (v != null)
                                         {
-                                            gd.GroupAccumulator[c] = th.Math.Sum(gd.GroupAccumulator[c], v);
-                                            ++gd.GroupCounter[c];
+                                            if (Columns[c].AggregateWeightDataField != null)
+                                            {
+                                                var w = row[Columns[c]._AggregateWeightDataFieldIndex];
+                                                if (w != null)
+                                                {
+                                                    var wd = Convert.ToDecimal(w);
+                                                    var wv = wd * Convert.ToDecimal(v);
+                                                    gd.GroupAccumulator[c] = (decimal)gd.GroupAccumulator[c] + wv;
+                                                    gd.GroupCounter[c] += wd;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                gd.GroupAccumulator[c] = th.Math.Sum(gd.GroupAccumulator[c], v);
+                                                ++gd.GroupCounter[c];
+                                            }
                                         }
                                         break;
                                     case AggregateFunction.Min:
@@ -492,7 +537,7 @@ namespace Codaxy.CodeReports.Controls
             report.Cells.AddRange(cells);
         }
 
-        object CalculateAggregate(AggregateFunction f, object accumulator, int counter)
+        object CalculateAggregate(AggregateFunction f, object accumulator, decimal counter)
         {
             switch (f)
             {
@@ -500,8 +545,8 @@ namespace Codaxy.CodeReports.Controls
                     return null;
                 case AggregateFunction.Count:
                     return counter;
-                case AggregateFunction.Avg:
-                    if (accumulator != null && counter > 0)
+                case AggregateFunction.Avg:                    
+                    if (accumulator != null && counter != 0)
                         return Convert.ToDecimal(accumulator) / counter;
                     return null;
                 default:

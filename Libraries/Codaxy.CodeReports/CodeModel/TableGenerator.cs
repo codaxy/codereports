@@ -95,6 +95,7 @@ namespace Codaxy.CodeReports.CodeModel
                     var c = new TableColumn
                     {
                         AggregateFunction = tca.AggregateFunction,
+                        AggregateWeightDataField = tca.AggregateWeightDataField,
                         CellAlignment = cal,
                         DataField = tca.DataField ?? p.Name,
                         FooterAlignment = tca.FooterAlignment == CellAlignment.Inherit ? cal : tca.FooterAlignment,

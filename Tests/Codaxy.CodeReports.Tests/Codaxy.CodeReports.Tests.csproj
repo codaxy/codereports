@@ -51,6 +51,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ConditionalFormattingTest.cs" />
+    <Compile Include="Tests\GroupingTests.cs" />
     <Compile Include="Tests\WeightedAverageTest.cs" />
     <Compile Include="Tests\TextExporterTests.cs" />
   </ItemGroup>

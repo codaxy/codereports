@@ -33,7 +33,7 @@ namespace Codaxy.CodeReports.Tests
             public String G { get; set; }
         }
 
-        [Test(Active=true)]
+        [Test(Active=false)]
         public void TestFooters()
         {
             var dc = new DataContext();

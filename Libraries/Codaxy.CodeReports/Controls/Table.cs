@@ -312,49 +312,55 @@ namespace Codaxy.CodeReports.Controls
             for (int r = 0, rowIndex = 0; r <= rows.Length; r++, rowIndex++)
             {
                 var row = r < rows.Length ? rows[r] : null;
+                var closeToGroupLevel = row!=null ? groupData.Count : 0;
 
-                for (int g = 0; g < groupData.Count; g++)
+                if (prevRow != null && row != null)
+                    for (int g = 0; g < groupData.Count; g++)
+                        if (RowComparer.Compare(row, prevRow, groupData[g].Columns) != 0)
+                        {
+                            closeToGroupLevel = g;
+                            break;
+                        }
+
+                //close higher groups first
+                for (int g = groupData.Count - 1; g >= closeToGroupLevel; g--)
                 {
-                    var gd = groupData[groupData.Count - 1 - g];
+                    var gd = groupData[g];
                     if (gd.GroupOpen)
                     {
-                        //prevRow is not null because group is open
-                        if (row == null || RowComparer.Compare(row, prevRow, gd.Columns) != 0)
+                        gd.GroupOpen = false;
+                        //close group
+                        if (gd.Group.ShowFooter)
                         {
-                            gd.GroupOpen = false;
-                            //close group
-                            if (gd.Group.ShowFooter)
+                            for (int c = 0; c < Columns.Length; c++)
                             {
-                                for (int c = 0; c < Columns.Length; c++)
+                                if (Columns[c].AggregateFunction == AggregateFunction.Avg)
+                                    gd.GroupAccumulator[c] = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);
+
+                                var style = gd.GetFooterCellStyle(Columns[c].ColumnType);
+                                switch (Columns[c].FooterType)
                                 {
-                                    if (Columns[c].AggregateFunction == AggregateFunction.Avg)
-                                        gd.GroupAccumulator[c] = CalculateAggregate(Columns[c].AggregateFunction, gd.GroupAccumulator[c], gd.GroupCounter[c]);
-                                    
-                                    var style = gd.GetFooterCellStyle(Columns[c].ColumnType);
-                                    switch (Columns[c].FooterType)
-                                    {
-                                        case ColumnFooterType.FooterText:                                            
-                                            cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = Columns[c].FooterText, Value = Columns[c].FooterText, CellStyleIndex = style, Alignment = Columns[c].FooterAlignment });
-                                            break;
-                                        case ColumnFooterType.AggregateValue:
-                                            String fv = (Columns[c].FooterFormat != null) ? String.Format(Columns[c].FooterFormat, gd.GroupAccumulator[c]) : (gd.GroupAccumulator[c] != null ? gd.GroupAccumulator[c].ToString() : null);
-                                            var al = Columns[c]._DataFieldIndex >= 0 ? CalcAlignment(Columns[c].FooterAlignment, data.TypeHelper[Columns[c]._DataFieldIndex]) : CellAlignment.Auto;
-                                            cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = fv, Value = gd.GroupAccumulator[c], CellStyleIndex = style, Alignment = al, Format = Columns[c].FooterFormat });
-                                            break;
-                                        case ColumnFooterType.GroupFooter:
-                                            String gfv = gd.PreparedFooterColumns == null ? gd.PreparedFooterFormat : String.Format(gd.PreparedFooterFormat, prevRow.GetMany(gd.PreparedFooterColumns));
-                                            var gal = Columns[c]._DataFieldIndex >= 0 ? CalcAlignment(Columns[c].FooterAlignment, data.TypeHelper[Columns[c]._DataFieldIndex]) : CellAlignment.Auto;
-                                            cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = gfv, Value = gfv, CellStyleIndex = style, Alignment = gal });
-                                            break;
-                                    }
-                                    if (Columns[c].FooterColSpan > 1)
-                                    {
-                                        report.MergedCells.Add(new Rect { Col1 = pos.Col + c, Col2 = pos.Col + c + Columns[c].FooterColSpan - 1, Row1 = pos.Row, Row2 = pos.Row });
-                                        c += Columns[c].FooterColSpan - 1;
-                                    }
+                                    case ColumnFooterType.FooterText:
+                                        cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = Columns[c].FooterText, Value = Columns[c].FooterText, CellStyleIndex = style, Alignment = Columns[c].FooterAlignment });
+                                        break;
+                                    case ColumnFooterType.AggregateValue:
+                                        String fv = (Columns[c].FooterFormat != null) ? String.Format(Columns[c].FooterFormat, gd.GroupAccumulator[c]) : (gd.GroupAccumulator[c] != null ? gd.GroupAccumulator[c].ToString() : null);
+                                        var al = Columns[c]._DataFieldIndex >= 0 ? CalcAlignment(Columns[c].FooterAlignment, data.TypeHelper[Columns[c]._DataFieldIndex]) : CellAlignment.Auto;
+                                        cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = fv, Value = gd.GroupAccumulator[c], CellStyleIndex = style, Alignment = al, Format = Columns[c].FooterFormat });
+                                        break;
+                                    case ColumnFooterType.GroupFooter:
+                                        String gfv = gd.PreparedFooterColumns == null ? gd.PreparedFooterFormat : String.Format(gd.PreparedFooterFormat, prevRow.GetMany(gd.PreparedFooterColumns));
+                                        var gal = Columns[c]._DataFieldIndex >= 0 ? CalcAlignment(Columns[c].FooterAlignment, data.TypeHelper[Columns[c]._DataFieldIndex]) : CellAlignment.Auto;
+                                        cells.Add(new Cell { Column = pos.Col + c, Row = pos.Row, FormattedValue = gfv, Value = gfv, CellStyleIndex = style, Alignment = gal });
+                                        break;
                                 }
-                                pos.Row++;
+                                if (Columns[c].FooterColSpan > 1)
+                                {
+                                    report.MergedCells.Add(new Rect { Col1 = pos.Col + c, Col2 = pos.Col + c + Columns[c].FooterColSpan - 1, Row1 = pos.Row, Row2 = pos.Row });
+                                    c += Columns[c].FooterColSpan - 1;
+                                }
                             }
+                            pos.Row++;
                         }
                     }
                 }

@@ -144,18 +144,18 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                 return false;
             }
             string f = format.Substring(3, format.Length - 4);
-            if (f == "d")
+            switch (f)
             {
-                excelFormat = "mm/dd/yyyy";
-                return true;
+                case "d":
+                    excelFormat = "mm/dd/yyyy";
+                    return true;
+                case "n":
+                    excelFormat = "#,#0.00";
+                    return true;
             }
-            if (f == "n")
-            {
-                excelFormat = "#,#0.00";
-                return true;
-            }
-            excelFormat = null;
-            return false;
+
+            excelFormat = f;
+            return true;
         }
     }
 

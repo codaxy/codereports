@@ -29,6 +29,7 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                 {
                     var eStyle = theme.GetCellStyle(cell.CellStyleIndex);
                     CellData c = null;
+                    object v = cell.Value;
                     if (eStyle != null)
                     {
                         if (eStyle.BorderStyle != null)
@@ -45,7 +46,7 @@ namespace Codaxy.CodeReports.Exporters.Xlio
 
                             if (c.IsMerged && c.MergedRange.Cell1.Col == cell.Column && c.MergedRange.Cell1.Row == cell.Row)
                             {
-                                for (var col = c.MergedRange.Cell1.Col+1; col <= c.MergedRange.Cell2.Col; col++)
+                                for (var col = c.MergedRange.Cell1.Col + 1; col <= c.MergedRange.Cell2.Col; col++)
                                 {
                                     if (eStyle.BorderStyle.Top != null)
                                         ws.Cells[cell.Row, col].Style.Border.Top = c.Style.Border.Top;
@@ -78,8 +79,12 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                                 c.Style.Font.Underline = FontUnderline.Single;
                         }
 
-                        if (!String.IsNullOrEmpty(cell.Format) && cell.Format.Length > 4)
-                            c.Style.Format = GetNumberFormat(cell.Format);
+                        String numberFormat;
+                        if (cell.Format != null)
+                            if (GetNumberFormat(cell.Format, out numberFormat))
+                                c.Style.Format = numberFormat;
+                            else
+                                v = cell.FormattedValue;
 
                         if (eStyle.BackgroundColor != null)
                             c.Style.Fill = new CellFill { Foreground = eStyle.BackgroundColor.ToColor(), Pattern = FillPattern.Solid };
@@ -87,7 +92,7 @@ namespace Codaxy.CodeReports.Exporters.Xlio
 
                     ws.Cells[cell.Row, cell.Column].Style.Alignment.HAlign = GetAlignment(cell.Alignment);
 
-                    ws.Cells[cell.Row, cell.Column].Value = cell.Value;
+                    ws.Cells[cell.Row, cell.Column].Value = v;
                 }
             }
 
@@ -131,14 +136,26 @@ namespace Codaxy.CodeReports.Exporters.Xlio
             }
         }
 
-        private static string GetNumberFormat(string format)
+        private static bool GetNumberFormat(string format, out string excelFormat)
         {
+            if (format == null || format.Length <= 4 || !format.StartsWith("{0:") || !format.EndsWith("}"))
+            {
+                excelFormat = null;
+                return false;
+            }
             string f = format.Substring(3, format.Length - 4);
             if (f == "d")
-                f = "mm/dd/yyyy";
+            {
+                excelFormat = "mm/dd/yyyy";
+                return true;
+            }
             if (f == "n")
-                f = "#,#0.00";
-            return f;
+            {
+                excelFormat = "#,#0.00";
+                return true;
+            }
+            excelFormat = null;
+            return false;
         }
     }
 

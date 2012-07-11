@@ -83,7 +83,9 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                         if (cell.Format != null)
                             if (GetNumberFormat(cell.Format, out numberFormat))
                                 c.Style.Format = numberFormat;
-                            else
+                            else if (v is DateTime)
+                                c.Style.Format = "m/d/yyyy\\ h:mm:ss";
+                             else
                                 v = cell.FormattedValue;
 
                         if (eStyle.BackgroundColor != null)

@@ -51,9 +51,9 @@ namespace Codaxy.CodeReports.Controls
 
         public Table AddTable<T>(string tableName)
         {
-            var table = TableGenerator.GetTable(typeof(T), tableName);
+            var table = TableGenerator.GetTable(typeof(T), tableName, LocalizationUtil.CurrentCulture);
             Add(table);
-			return table;
+            return table;
         }
 
 		public Table AddTable<T>(string tableName, ILocalizationStore localizationStore)

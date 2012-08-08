@@ -29,20 +29,21 @@ namespace Codaxy.CodeReports.CodeModel
             {
                 loc = new Dictionary<string, List<ColLoc>>();
                 foreach (var field in fields)
-                {
-                    var parts = field.FieldName.Split(':');
-                    if (parts.Length == 2)
+                    if (!String.IsNullOrEmpty(field.LocalizedText))
                     {
-                        List<ColLoc> props;
-                        if (!loc.TryGetValue(parts[0], out props))
-                            loc[parts[0]] = props = new List<ColLoc>();
-                        props.Add(new ColLoc
+                        var parts = field.FieldName.Split(':');
+                        if (parts.Length == 2)
                         {
-                            Property = parts[1],
-                            LocalizedText = field.LocalizedText
-                        });
+                            List<ColLoc> props;
+                            if (!loc.TryGetValue(parts[0], out props))
+                                loc[parts[0]] = props = new List<ColLoc>();
+                            props.Add(new ColLoc
+                            {
+                                Property = parts[1],
+                                LocalizedText = field.LocalizedText
+                            });
+                        }
                     }
-                }
             }
             return loc;
         }

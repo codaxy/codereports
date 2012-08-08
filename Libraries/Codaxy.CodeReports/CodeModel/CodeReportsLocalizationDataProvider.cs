@@ -12,6 +12,8 @@ namespace Codaxy.CodeReports.Localization
 {
     public class CodeModelReportLocalizationDataProvider : ILocalizationDataProvider
     {
+        public bool IncludeNullFields { get; set; }
+
         public Dictionary<string, Field[]> ReadDefaultData(Assembly assembly)
         {
             var types = AssemblyHelper.GetAttributedTypesForAssembly(assembly, typeof(TableAttribute), false);
@@ -23,7 +25,7 @@ namespace Codaxy.CodeReports.Localization
                 List<Field> fields = new List<Field>();
                 var rowGroupAttributes = AttributeHelper.GetCustomAttributes<GroupingLevelAttribute>(type, false);
                 foreach (var rga in rowGroupAttributes)
-                {
+                {                    
                     fields.Add(new Field { FieldName = "GroupingLevel-" + rga.Level + ":CaptionFormat", LocalizedText = rga.CaptionFormat });
                     fields.Add(new Field { FieldName = "GroupingLevel-" + rga.Level + ":FooterFormat", LocalizedText = rga.FooterFormat });
                 }
@@ -32,13 +34,16 @@ namespace Codaxy.CodeReports.Localization
                 {
                     var column = AttributeHelper.GetCustomAttribute<TableColumnAttribute>(p, false);
                     if (column != null)
-                    {
+                    {                        
                         fields.Add(new Field { FieldName = p.Name + ":HeaderText", LocalizedText = column.HeaderText });
                         fields.Add(new Field { FieldName = p.Name + ":Format", LocalizedText = column.Format });
                         fields.Add(new Field { FieldName = p.Name + ":FooterText", LocalizedText = column.FooterText });
                         fields.Add(new Field { FieldName = p.Name + ":FooterFormat", LocalizedText = column.FooterFormat });
                     }
                 }
+
+                if (!IncludeNullFields)
+                    fields = fields.Where(a => a.LocalizedText != null).ToList();
 
                 if (fields.Count > 0)
                     res.Add(type.FullName, fields.ToArray());

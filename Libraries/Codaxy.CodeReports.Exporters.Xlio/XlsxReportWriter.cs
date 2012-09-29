@@ -34,7 +34,7 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                     {
                         if (eStyle.BorderStyle != null)
                         {
-                            c = ws.Cells[cell.Row, cell.Column];
+                            c = ws[cell.Row, cell.Column];
                             if (eStyle.BorderStyle.Left != null)
                                 c.Style.Border.Left = eStyle.BorderStyle.Left.ToBorderEdge();
                             if (eStyle.BorderStyle.Right != null)
@@ -49,24 +49,24 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                                 for (var col = c.MergedRange.Cell1.Col + 1; col <= c.MergedRange.Cell2.Col; col++)
                                 {
                                     if (eStyle.BorderStyle.Top != null)
-                                        ws.Cells[cell.Row, col].Style.Border.Top = c.Style.Border.Top;
+                                        ws[cell.Row, col].Style.Border.Top = c.Style.Border.Top;
                                     if (eStyle.BorderStyle.Bottom != null)
-                                        ws.Cells[c.MergedRange.Cell2.Row, col].Style.Border.Bottom = c.Style.Border.Bottom;
+                                        ws[c.MergedRange.Cell2.Row, col].Style.Border.Bottom = c.Style.Border.Bottom;
                                 }
 
                                 for (var row = c.MergedRange.Cell1.Row + 1; row <= c.MergedRange.Cell2.Row; row++)
                                 {
                                     if (eStyle.BorderStyle.Left != null)
-                                        ws.Cells[row, cell.Column].Style.Border.Left = c.Style.Border.Left;
+                                        ws[row, cell.Column].Style.Border.Left = c.Style.Border.Left;
                                     if (eStyle.BorderStyle.Right != null)
-                                        ws.Cells[row, c.MergedRange.Cell2.Col].Style.Border.Right = c.Style.Border.Right;
+                                        ws[row, c.MergedRange.Cell2.Col].Style.Border.Right = c.Style.Border.Right;
                                 }
                             }
                         }
 
                         if (eStyle.FontStyle != null)
                         {
-                            c = c ?? ws.Cells[cell.Row, cell.Column];
+                            c = c ?? ws[cell.Row, cell.Column];
                             if (!String.IsNullOrEmpty(eStyle.FontStyle.FontName))
                                 c.Style.Font.Name = eStyle.FontStyle.FontName;
                             if (eStyle.FontStyle.FontSize != 0)
@@ -92,9 +92,9 @@ namespace Codaxy.CodeReports.Exporters.Xlio
                             c.Style.Fill = new CellFill { Foreground = eStyle.BackgroundColor.ToColor(), Pattern = FillPattern.Solid };
                     }
 
-                    ws.Cells[cell.Row, cell.Column].Style.Alignment.HAlign = GetAlignment(cell.Alignment);
+                    ws[cell.Row, cell.Column].Style.Alignment.HAlign = GetAlignment(cell.Alignment);
 
-                    ws.Cells[cell.Row, cell.Column].Value = v;
+                    ws[cell.Row, cell.Column].Value = v;
                 }
             }
 

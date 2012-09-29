@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Codaxy.Xlio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Codaxy.Xlio.0.8.5\lib\Codaxy.Xlio.dll</HintPath>
+      <HintPath>..\..\packages\Codaxy.Xlio.0.9.3.1\lib\Codaxy.Xlio.dll</HintPath>
     </Reference>
     <Reference Include="Codaxy.Xlio.XmlSerializers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Codaxy.Xlio.0.8.5\lib\Codaxy.Xlio.XmlSerializers.dll</HintPath>
+      <HintPath>..\..\packages\Codaxy.Xlio.0.9.3.1\lib\Codaxy.Xlio.XmlSerializers.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
-  <metadata schemaVersion="2">
-    <id>Codaxy.CodeReports.Exporters.Xlio</id>    
-    <title>Codaxy.CodeReports Xlio Exporter Library</title>
-    <version>0.1.5.0</version>
-    <authors>Codaxy</authors>
-    <description>Codaxy.CodeReports Library provides helpers for report generation</description>
+	<metadata schemaVersion="2">
+		<id>Codaxy.CodeReports.Exporters.Xlio</id>    
+		<title>Codaxy.CodeReports Xlio Exporter Library</title>
+		<version>0.1.5.1</version>
+		<authors>Codaxy</authors>
+		<description>Codaxy.CodeReports Library provides helpers for report generation</description>
 	<dependencies>		
 		<dependency id="Codaxy.CodeReports" />
 		<dependency id="Codaxy.Xlio" />

@@ -77,7 +77,7 @@ namespace Codaxy.CodeReports.Data
                 if (res != 0)
                     return res * (int)sort[i].SortDirection;
             }
-            return 0;
+            return x.RowIndex - y.RowIndex;
         }
     }
 
@@ -111,9 +111,14 @@ namespace Codaxy.CodeReports.Data
             Table rt = new Table();
             var rows = dt.GetRows();
             List<Row> res = new List<Row>();
+            int rowIndex = 0;
+
             foreach (var r in rows)
             {
-                Row rr = new Row(columns.Length);
+                Row rr = new Row(columns.Length)
+                {
+                    RowIndex = rowIndex++
+                };
                 int ci = 0;
                 foreach (var c in columns)
                     rr[ci++] = r.GetField(c);
@@ -136,6 +141,9 @@ namespace Codaxy.CodeReports.Data
     public class Row
     {
         object[] data;
+
+        public int RowIndex { get; set; }
+
         public Row(int n) { data = new object[n]; }
         public object this[int i] { get { return i < 0 ? null : data[i]; } set { data[i] = value; } }
 

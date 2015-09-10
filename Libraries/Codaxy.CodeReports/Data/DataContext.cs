@@ -54,10 +54,10 @@ namespace Codaxy.CodeReports.Data
 
         public int Compare(Row x, Row y)
         {
-            return Compare(x, y, sort);
+            return Compare(x, y, sort, compareRowIndices: true);
         }
 
-        public static int Compare(Row x, Row y, params SortColumn[] sort)
+        public static int Compare(Row x, Row y, SortColumn[] sort, bool compareRowIndices = false)
         {
             for (int i = 0; i < sort.Length; i++)
             {
@@ -77,7 +77,11 @@ namespace Codaxy.CodeReports.Data
                 if (res != 0)
                     return res * (int)sort[i].SortDirection;
             }
-            return x.RowIndex - y.RowIndex;
+
+            if (compareRowIndices)
+                return x.RowIndex - y.RowIndex;
+            
+            return 0;
         }
     }
 

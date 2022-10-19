@@ -1,88 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{55CDA06B-F173-408D-B8EF-7BADCE5793ED}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Codaxy.CodeReports.Tests</RootNamespace>
-    <AssemblyName>Codaxy.CodeReports.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tests\CellDisplayModeTests.cs" />
-    <Compile Include="Helpers\ExpandableList.cs" />
-    <Compile Include="Helpers\ReportUtil.cs" />
-    <Compile Include="PetaTest.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\ConditionalFormattingTest.cs" />
-    <Compile Include="Tests\GroupingTests.cs" />
-    <Compile Include="Tests\WeightedAverageTest.cs" />
-    <Compile Include="Tests\TextExporterTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.csproj">
-      <Project>{05EDB9E0-2C5B-4FE7-98E9-0FA1AAF59DEA}</Project>
-      <Name>Codaxy.CodeReports.Exporters.Html</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Text\Codaxy.CodeReports.Exporters.Text.csproj">
-      <Project>{48ADB77E-2E90-4C71-B060-C9C2440FF095}</Project>
-      <Name>Codaxy.CodeReports.Exporters.Text</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Xlio\Codaxy.CodeReports.Exporters.Xlio.csproj">
-      <Project>{E8E20AFC-3CAE-45AF-8CA4-95C0C172B9C0}</Project>
-      <Name>Codaxy.CodeReports.Exporters.Xlio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports\Codaxy.CodeReports.csproj">
-      <Project>{F069E65E-F159-41D2-8541-79ABDB6FE0A8}</Project>
-      <Name>Codaxy.CodeReports</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Html\Codaxy.CodeReports.Exporters.Html.csproj" />
+	  <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Text\Codaxy.CodeReports.Exporters.Text.csproj" />
+	  <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports.Exporters.Xlio\Codaxy.CodeReports.Exporters.Xlio.csproj" />
+	  <ProjectReference Include="..\..\Libraries\Codaxy.CodeReports\Codaxy.CodeReports.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using Codaxy.CodeReports.Reflection;
+using Codaxy.Common;
 
 namespace Codaxy.CodeReports.Data
 {
@@ -12,7 +13,7 @@ namespace Codaxy.CodeReports.Data
         Type t;
         TypeMath m;
         public TypeHelper(Type type) { t = type; }
-        public bool IsNumericType { get { return TypeInfo.IsNumericType(t); } }
+        public bool IsNumericType { get { return Common.Numeric.IsNumericType(t); } }
         public TypeMath Math { get { return m ?? (m = TypeMath.Create(t)); } }
     }
 
